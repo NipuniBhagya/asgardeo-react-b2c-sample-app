@@ -72,7 +72,7 @@ Add Second Factor Authentication (Optional)
 1. Clone the repository.
 
 ```bash
-git clone https://github.com/dasuni-30/asgardeo-react-sample-app.git
+git clone https://github.com/wso2/asgardeo-react-b2c-sample-app.git
 ```
 
 2. Install the dependencies.
@@ -81,13 +81,7 @@ git clone https://github.com/dasuni-30/asgardeo-react-sample-app.git
 npm install
 ```
 
-3. Create a `.env` file based on the `.env.example` file.
-
-```bash
-cp .env.example .env
-```
-
-4. Update the values in the `.env` file based on your requirements.
+3. Update the values in the `.env` file based on your requirements.
 
 ```bash
 # The port number on which the client application will run
@@ -119,7 +113,7 @@ REACT_APP_ORG_NAME=<org-name>
 
 ```
 
-5. Start the development server.
+4. Start the development server.
 
 ```bash
 npm start
