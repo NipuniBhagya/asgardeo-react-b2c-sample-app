@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import { AuthenticatedComponent, useAuthContext } from "@asgardeo/auth-react";
 import { routes } from "./configs/routes-config";
 import { AppConstants } from "./constants/app-constants";
-import { PreLoader } from "./components/PreLoader";
 
 function App() {
     const { state } = useAuthContext();
@@ -16,7 +15,7 @@ function App() {
         <Router>
             <div className='App'>
                 { state?.isAuthenticated && <Nav></Nav> }
-                <Suspense fallback={ <PreLoader />} >
+                <Suspense fallback={ <div class='loader-container'><div class='loader'/></div> } >
                     <Routes>
                         <Route path={ AppConstants.getPaths().get("LOGIN") } element={ <Login /> } key={ -1 } />
                         {routes.map((route, index) => {

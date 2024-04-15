@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { getExternalApi } from "../api/external-api";
 import endpointConfig from "../configs/endpoint-config";
-import { PreLoader } from "./PreLoader";
 
 /**
  * API Call component.
@@ -60,50 +59,47 @@ const APICall = () => {
                 <h3>Response</h3>
                 {
                     externalApiResponse ? (
-                    <>
-                        { console.log("externalApiResponse:", isExternalApiRequestLoading) }
-                        {
-                            !isExternalApiRequestLoading ? (
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Code</th>
-                                            <th>Description</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>200</td>
-                                            <td>
-                                                <div>
-                                                    <div>Ok</div>
-                                                    <div className="clear-btn">
-                                                        <button onClick={ () => setExternalApiResponse(undefined) }>
-                                                            <strong>Clear Response</strong>
-                                                        </button>
-                                                    </div>   
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <pre className='api-response' id='contentToCopy'>
-                                                    { JSON.stringify(externalApiResponse, null, 2) }
-                                                </pre>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            ) : (
-                                <div>
-                                    <PreLoader />
-                                </div>
-                            )
-                        }
-                    </>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>200</td>
+                                    <td>
+                                        <div>
+                                            <div>Ok</div>
+                                            <div className="clear-btn">
+                                                <button onClick={ () => setExternalApiResponse(undefined) }>
+                                                    <strong>Clear Response</strong>
+                                                </button>
+                                            </div>   
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <pre className='api-response' id='contentToCopy'>
+                                            { JSON.stringify(externalApiResponse, null, 2) }
+                                        </pre>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     ) : (
-                        <pre className='api-response'>[ ]</pre>
+                        <pre className='api-response'>
+                            {
+                                isExternalApiRequestLoading ? (
+                                    "Loading..."
+                                ) : (
+                                    "[ ]"
+                                )
+                            }
+                        </pre>
                     )
                 }
                 <div className='response-details'></div>

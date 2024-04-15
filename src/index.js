@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "@asgardeo/auth-react";
-import { PreLoader } from "./components/PreLoader";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -16,11 +15,11 @@ root.render(
             clientID: `${process.env.REACT_APP_CLIENT_ID}`,
             baseUrl: `${process.env.REACT_APP_ASGARDEO_BASE_URL}`,
             resourceServerURLs: [
-                "https://bdc81b0c-bae6-43e8-b4aa-0702a82aee77-prod.e1-us-east-azure.choreoapis.dev/asgardeo-b2c-demo/account-list-api/endpoint-9090-803/v1",
+                "https://bdc81b0c-bae6-43e8-b4aa-0702a82aee77-prod.e1-us-east-azure.choreoapis.dev/asgardeo-b2c-demo/accounts-management-api/endpoint-9090-803/v1.0",
             ],
             scope: ["openid", "profile", "internal_login", "internal_user_mgt_view", "app_roles"],
         }}
-        fallback={ <PreLoader /> }
+        fallback={ <div class='loader-container'><div class='loader'/></div> }
     >
         <React.StrictMode>
             <App />
