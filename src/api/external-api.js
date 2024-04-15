@@ -1,23 +1,30 @@
-import {AsgardeoSPAClient} from '@asgardeo/auth-react';
-import endpointConfig from '../configs/endpoint-config';
+import { AsgardeoSPAClient } from "@asgardeo/auth-react";
+import endpointConfig from "../configs/endpoint-config";
 
-export async function getExternalApi () {
+// Initialize the AsgardeoSPAClient.
+const auth = AsgardeoSPAClient.getInstance();
 
-  const requestConfig = {
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    },
-    method: "GET",
-    url: `${endpointConfig.api.endpoints.externalApi}`
-  };
+/**
+ * Get the external API.
+ * 
+ * @returns { Promise<any> } A promise containing the external API response.
+ */
+export async function getExternalApi() {
+    const requestConfig = {
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        method: "GET",
+        url: `${ endpointConfig.api.endpoints.externalApi }`,
+    };
 
-  return AsgardeoSPAClient.getInstance().httpRequest(requestConfig)
-  .then((response) => {
-      
-    return response.data;
-  })
-  .catch((error) => {
-    // Log the error.
-  });
-};
+    try {
+        const response = await auth.httpRequest(requestConfig);
+        
+        return response.data;
+    } catch (error) {
+        // Log the error.
+        console.error("Failed to fetch external API.", error);
+    }
+}

@@ -1,4 +1,4 @@
-import APICall from '../components/APICall';
+import APICall from "../components/APICall";
 
 /**
  * Resources page for the Sample.
@@ -7,19 +7,20 @@ import APICall from '../components/APICall';
  *
  * @return {React.ReactElement}
  */
-export const Resources = () => {
-
-  return (
-    <div className='App-section'>
-      <header className='App-header-sub-section'>
-        <div>
-          <h1>External API</h1>
-          <p className='p-description justified-text max-width'>
-            Invoke an external API and retrieve the resulting response.
-          </p>
+const Resources = () => {
+    return (
+        <div className='App-section'>
+            <header className='App-header-sub-section'>
+                <div>
+                    <h1>External API</h1>
+                    <p className='p-description justified-text max-width'>
+                        Invoke an external API and retrieve the resulting response.
+                    </p>
+                </div>
+            </header>
+            <APICall />
         </div>
-      </header>
-      <APICall/>
-    </div>
-  );
+    );
 };
+
+export default Resources;

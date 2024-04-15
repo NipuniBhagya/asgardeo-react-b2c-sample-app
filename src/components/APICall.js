@@ -1,46 +1,124 @@
-import React, { useState } from 'react';
-import { getExternalApi } from '../api/external-api';
-import INFO_ICON from '../images/info.png';
+import React, { useState } from "react";
+import { getExternalApi } from "../api/external-api";
+import endpointConfig from "../configs/endpoint-config";
+import { PreLoader } from "./PreLoader";
 
 /**
  * API Call component.
  */
 const APICall = () => {
-  const [ userInfo, setUserInfo ] = useState();
-
-  const message = 
-    'Initiate a request to an external API and retrieve the response by clicking on the button below. ' +
-    'This involves communicating with an external server through a ' +
-    'designated API.';
+    // State to store the external API response.
+    const [externalApiResponse, setExternalApiResponse] = useState();
+    const [isExternalApiRequestLoading, setIsExternalApiRequestLoading] = useState(false);
 
     // Invoke the external API.
     const handleApiCall = () => {
-    (async () => {
-      try {
-        const response = await getExternalApi();
-        setUserInfo(response);
-      } catch (error) {
-        // Log the error.
-      }
-    })();
-  };
-  
-  return (
-    <div className='container-center'>
-      <div className="card-container">
-        <img alt='react-logo' src={ INFO_ICON} className='small-icon'/>
-        <p className='p-description max-width'>{message}</p>
-      </div>
-      <div className='table-container'>
-        <button className='btn btn-margin-top' onClick={handleApiCall}>Invoke API</button>
-        <br/>
-        <h3>Output</h3>
-        <pre id='contentToCopy'>
-          {JSON.stringify(userInfo, null, 2)}
-        </pre>
-      </div>
-    </div>
-  )
-}
+
+        // Set the loading state.
+        setIsExternalApiRequestLoading(true);
+
+        getExternalApi()
+            .then((response) => {
+                setExternalApiResponse(response);
+            })
+            .catch((error) => {
+                // Log the error.
+                console.error("Failed to fetch external API.");
+            })
+            .finally(() => {
+                setIsExternalApiRequestLoading(false);
+            });
+    };
+
+    return (
+        <div className='api-documentation'>
+            <div className='api-path'>
+                <div className='method-label'>GET</div>
+                <div className='path-label'>/accounts</div>
+            </div>
+            <hr />
+            <div className='api-request'>
+                <h3>Request</h3>
+                <pre>
+                    <table>
+                        <tr>
+                            <td><strong>Endpoint:</strong></td>
+                            <td>{ endpointConfig.api.endpoints.externalApi }</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Headers:</strong></td>
+                            <td>
+                                "Accept": "application/json",
+                                "Content-Type": "application/json"
+                            </td>
+                        </tr>
+                    </table>
+                </pre>
+            </div>
+            <hr />
+            <div className='api-response-container'>
+                <h3>Response</h3>
+                {
+                    externalApiResponse ? (
+                    <>
+                        { console.log("externalApiResponse:", isExternalApiRequestLoading) }
+                        {
+                            !isExternalApiRequestLoading ? (
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>200</td>
+                                            <td>
+                                                <div>
+                                                    <div>Ok</div>
+                                                    <div className="clear-btn">
+                                                        <button onClick={ () => setExternalApiResponse(undefined) }>
+                                                            <strong>Clear Response</strong>
+                                                        </button>
+                                                    </div>   
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <pre className='api-response' id='contentToCopy'>
+                                                    { JSON.stringify(externalApiResponse, null, 2) }
+                                                </pre>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <div>
+                                    <PreLoader />
+                                </div>
+                            )
+                        }
+                    </>
+                    ) : (
+                        <pre className='api-response'>[ ]</pre>
+                    )
+                }
+                <div className='response-details'></div>
+            </div>
+            {
+                isExternalApiRequestLoading || !externalApiResponse ? (
+                    <div className="try-it-out">
+                        <button onClick={ handleApiCall }>
+                            Invoke API
+                        </button>
+                    </div>
+                ) : null
+            }
+        </div>
+    );
+};
 
 export default APICall;

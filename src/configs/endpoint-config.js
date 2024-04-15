@@ -1,12 +1,13 @@
 const asgardeoBaseUrl = process.env.REACT_APP_ASGARDEO_BASE_URL;
 
 const endpointConfig = {
-  api: {
-    endpoints: {
-      me: `${asgardeoBaseUrl}/scim2/Me`,
-      externalApi: 'https://71fe9995-65a1-4e05-92a8-bc40749649d8-prod.e1-us-east-azure.choreoapis.dev/hmvi/demoapi/endpoint-9090-803/1.0.0/accounts'
+    api: {
+        endpoints: {
+            me: `${asgardeoBaseUrl}/scim2/Me`,
+            externalApi:
+                "https://bdc81b0c-bae6-43e8-b4aa-0702a82aee77-prod.e1-us-east-azure.choreoapis.dev/asgardeo-b2c-demo/account-list-api/endpoint-9090-803/v1/accounts",
+        },
     },
-  },
 };
 
 export default endpointConfig;
